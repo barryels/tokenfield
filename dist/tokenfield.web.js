@@ -274,7 +274,8 @@ function makeDefaultsAndOptions() {
 
     itemValue: 'id', // Value that will be taken out of the results and inserted into itemAttr.
     newItemValue: 'name', // Value that will be taken out of the results and inserted into itemAttr.
-    itemData: 'name' // Which property to search for.
+    itemData: 'name', // Which property to search for.
+    allowDuplicates: false // Allow duplicate items
   };
   return { _defaults: _defaults, _options: _options };
 }
@@ -1162,6 +1163,7 @@ var Tokenfield = function (_EventEmitter) {
       var scroll = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
       this._vars.suggestedItems.forEach(function (v) {
+        console.log(_this9.key, v);
         v.selected = v[_this9.key] === key;
         if (v.selected && scroll) {
           var height = parseInt(_this9._html.suggest.style.maxHeight, 10);
@@ -1303,7 +1305,7 @@ var Tokenfield = function (_EventEmitter) {
       item.focused = false;
       var o = this._options;
       // Check if item already exists in a given list.
-      if (item.isNew && !this._getItem(item[o.itemData], o.itemData) || !this._getItem(item[o.itemValue], o.itemValue)) {
+      if (item.isNew && !this._getItem(item[o.itemData], o.itemData) || !this._getItem(item[o.itemValue], o.itemValue) || item.isNew && o.allowDuplicates) {
         this.emit('addToken', this, item);
         if (!this._options.maxItems || this._options.maxItems && this._vars.setItems.length < this._options.maxItems) {
           item.selected = false;
@@ -1418,6 +1420,8 @@ var Tokenfield = function (_EventEmitter) {
         }, _defineProperty(_item, this.key, guid()), _defineProperty(_item, o.itemData, value), _item);
         this.emit('newToken', this, item);
       }
+
+      console.log(item[this.key]);
 
       if (item) {
         this._addItem(item);

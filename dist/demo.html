@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>Tokenfield Demo</title>
+
+  <!-- Bootstrap -->
+  <link href="./bootstrap.min.css" rel="stylesheet">
+  <link href="./tokenfield.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Tokenfield</h1>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Limited Tokens</h3>
+        <p>Simple example with color names:</p>
+        <input class="js-primary form-control" placeholder="Type colors such as `red` or 'blue'" type="text" />
+        <p class="text-muted">In this example you can select up to 11 colors from
+          the list: red, orange, yellow, green, blue, indigo, violet, black, white, brown, pink. You can't add your own
+          colors.</p>
+        <br />
+        <label>Result you'll get on form submit:</label>
+        <pre><code class="js-primary-result">Change input above to see the result.</code></pre>
+
+        <h4>How to Create:</h4>
+        <pre>
+<code>new Tokenfield({
+  el: document.querySelector('.text-input'), // Attach Tokenfield to the input element with class "text-input"
+  items: [
+    {id: 1, name: 'red'},
+    {id: 2, name:'orange'},
+    {id: 3, name: 'yellow'},
+    {id: 4, name: 'green'},
+    {id: 5, name:'blue'},
+    {id: 6, name: 'indigo'},
+    {id: 7, name: 'violet'},
+    {id: 8, name: 'black'},
+    {id: 9, name: 'white'},
+    {id: 10, name: 'brown'},
+    {id: 11, name: 'pink'}
+  ],
+  newItems: false
+});</code></pre>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>New Tokens</h3>
+        <p>Simple example with color names and ability to add your own colors:</p>
+        <form>
+          <input class="js-primary-new form-control" placeholder="Type colors such as `red` or 'blue'" type="text" />
+        </form>
+        <p class="text-muted">In this example you can select one of the predefined colors - red, blue or yellow or add
+          any new text yourself.</p>
+        <input class="form-control pull-left js-remove-item" style="width: 20%; margin-right: 8px;" placeholder="Enter item ID or name" />
+        <button class="btn btn-default js-remove">Remove Item</button>
+        <br />
+        <label>Result you'll get on form submit:</label>
+        <pre><code class="js-primary-new-result">Change input above to see the result.</code></pre>
+
+        <h4>How to Create:</h4>
+        <pre>
+<code>new Tokenfield({
+  el: document.querySelector('.text-input'), // Attach Tokenfield to the input element with class "text-input"
+  items: [{id: 1, name: 'red'}, {id: 2, name:'blue'}, {id: 3, name: 'yellow'}]
+});</code></pre>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Single Token</h3>
+        <p>Allows you to add only one token, either custom or one of the available colors:</p>
+        <input class="js-primary-single form-control" placeholder="Type colors such as `red` or 'blue'" type="text" />
+        <br />
+        <label>Result you'll get on form submit:</label>
+        <pre><code class="js-primary-single-result">Change input above to see the result.</code></pre>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Remote Autocomplete</h3>
+        <p>Fetches remote data for autocomplete:</p>
+        <input class="js-primary-remote form-control" placeholder="Type letters 'bl' s in 'blue' or 'black'" type="text" />
+        <br />
+        <label>Result you'll get on form submit:</label>
+        <pre><code class="js-primary-remote-result">Change input above to see the result.</code></pre>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Remote Autocomplete with data remapping</h3>
+        <p>Fetches remote data for autocomplete and renders labels in capital letters</p>
+        <input class="js-primary-remote-remap form-control" placeholder="Type letters 'bl' s in 'blue' or 'black'" type="text" />
+        <br />
+        <label>Result you'll get on form submit:</label>
+        <pre><code class="js-primary-remote-remap-result">Change input above to see the result.</code></pre>
+        <h4>How to Create:</h4>
+        <pre>
+<code>var tokenfield = new Tokenfield({
+  el: document.querySelector('.text-input'), // Attach Tokenfield to the input element with class "text-input"
+  newItems: false
+});
+
+// Overrride helper method responsible for rendering label.
+tokenfield.renderSetItemLabel = function(item) {
+  return item.name.toUpperCase();
+}</code></pre>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Allow Duplicates</h3>
+        <input class="js-primary-allow-duplicates form-control" placeholder="Type 'black' twice" type="text" />
+        <br />
+        <h4>How to Create:</h4>
+        <pre>
+    <code>var tokenfield = new Tokenfield({
+      el: document.querySelector('.text-input'), // Attach Tokenfield to the input element with class "text-input"
+      allowDuplicates: true
+    });</code></pre>
+      </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+  </div>
+
+  <footer style="background:#eee;padding:15px 0;">
+    <div class="container">
+      <ul class="list-inline">
+        <li><a href="https://github.com/KaneCohen/tokenfield">GitHub</a></li>
+        <li><a href="https://github.com/KaneCohen">Author</a></li>
+      </ul>
+      <p>Tokenfield is distributed under BSD-3-Clause license</p>
+    </div>
+  </footer>
+  <script src="./tokenfield.web.js"></script>
+  <script>
+    function serialize(tokenfield) {
+      var items = tokenfield.getItems();
+      console.log(items);
+      var prop;
+      var data = {};
+      items.forEach(function (item) {
+        if (item.isNew) {
+          prop = tokenfield._options.newItemName;
+        } else {
+          prop = tokenfield._options.itemName;
+        }
+        if (typeof data[prop] === 'undefined') {
+          data[prop] = [];
+        }
+        if (item.isNew) {
+          data[prop].push(item.name);
+        } else {
+          data[prop].push(item[tokenfield._options.itemValue]);
+        }
+      });
+      return data;
+    }
+    var colors = [
+      { id: 1, name: 'red' },
+      { id: 2, name: 'orange' },
+      { id: 3, name: 'yellow' },
+      { id: 4, name: 'green' },
+      { id: 5, name: 'blue' },
+      { id: 6, name: 'indigo' },
+      { id: 7, name: 'violet' },
+      { id: 8, name: 'black' },
+      { id: 9, name: 'white' },
+      { id: 10, name: 'brown' },
+      { id: 11, name: 'pink' }
+    ];
+    var jp = new Tokenfield({
+      el: document.querySelector('.js-primary'),
+      items: colors,
+      newItems: false,
+      addItemOnBlur: true,
+      filterSetItems: false
+    });
+    jp.on('change', function () {
+      var out = JSON.stringify(serialize(jp), null, 2);
+      document.querySelector('.js-primary-result').textContent = out;
+    });
+    var jpn = new Tokenfield({
+      el: document.querySelector('.js-primary-new'),
+      items: colors,
+      form: document.querySelector('form'),
+      addItemOnBlur: true,
+      addItemsOnPaste: true,
+      delimiters: [',', ' '],
+      minChars: 0,
+      maxSuggestWindow: 5,
+      singleInput: true,
+      singleInputValue: 'name'
+    });
+    jpn.setItems([
+      { id: 1, name: 'red' },
+      { id: 2, name: 'orange' },
+      { id: 3, name: 'yellow' }
+    ]);
+    jpn.on('change', function () {
+      var out = JSON.stringify(serialize(jpn), null, 2);
+      document.querySelector('.js-primary-new-result').textContent = out;
+    });
+    var jps = new Tokenfield({
+      el: document.querySelector('.js-primary-single'),
+      items: colors,
+      addItemOnBlur: true,
+      addItemsOnPaste: true,
+      multiple: false
+    });
+    jps.on('change', function () {
+      var out = JSON.stringify(serialize(jps), null, 2);
+      document.querySelector('.js-primary-single-result').textContent = out;
+    });
+    var jpr = new Tokenfield({
+      el: document.querySelector('.js-primary-remote'),
+      addItemOnBlur: true,
+      remote: {
+        url: 'https://kanecohen.github.io/tokenfield/remote.json',
+        headers: {
+          'foo': 'bar',
+          'hello': function () {
+            return 'world';
+          }
+        }
+      }
+    });
+    jpr.on('change', function () {
+      var out = JSON.stringify(serialize(jpr), null, 2);
+      document.querySelector('.js-primary-remote-result').textContent = out;
+    });
+    jpr.remapData = function (response) {
+      console.log('foo');
+      return response;
+    }
+    var jprr = new Tokenfield({
+      el: document.querySelector('.js-primary-remote-remap'),
+      remote: {
+        url: 'https://kanecohen.github.io/tokenfield/remote.json',
+        headers: {
+          'foo': 'bar',
+          'hello': function () {
+            return 'world';
+          }
+        }
+      }
+    });
+    jprr.remapData = function (response) {
+      console.log('bar');
+      return response;
+    }
+    jprr.renderSetItemLabel = function (item) {
+      return item.name.toUpperCase();
+    }
+    jprr.on('change', function () {
+      var out = JSON.stringify(serialize(jprr), null, 2);
+      document.querySelector('.js-primary-remote-remap-result').textContent = out;
+    });
+
+    var jpad = new Tokenfield({
+      el: document.querySelector('.js-primary-allow-duplicates'),
+      allowDuplicates: true,
+      // setItems: [
+      //   { id: 1, name: 'black' },
+      //   { id: 2, name: 'blue' },
+      //   { id: 3, name: 'yellow' },
+      //   { id: 4, name: 'black' },
+      // ],
+    });
+
+    document.querySelector('.js-remove').addEventListener('click', function () {
+      var val = document.querySelector('.js-remove-item').value;
+      if (val.length) {
+        jpn.removeItem(val);
+      }
+    });
+  </script>
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-59242657-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+
+</html>
+<!-- 
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Test page</title>
+  <meta charset="utf-8" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="tokenfield.css" />
+  <style type="text/css"></style>
+  <script type="text/javascript" src="./tokenfield.web.js"></script>
+</head>
+
+<body>
+  <div class="page">
+    <h3>Allow Duplicates</h3>
+    <textarea class="test-input-1"></textarea>
+
+    <h3>Don't Allow Duplicates</h3>
+    <textarea class="test-input-2"></textarea>
+  </div>
+
+  <script>
+
+    function testInput1_onInput(e) {
+      console.log('testInput1_onInput', e.target.innerHTML);
+    }
+
+    function init() {
+      var testInput1 = document.querySelector('.test-input-1');
+      var testInput2 = document.querySelector('.test-input-2');
+
+      var testInput1_tokenfield = new Tokenfield({
+        el: testInput1,
+        allowDuplicates: true,
+      });
+
+      var testInput2_tokenfield = new Tokenfield({
+        el: testInput2,
+      });
+
+
+      testInput1.addEventListener('addToken', function (e) {
+        console.log('addToken()', e);
+      });
+
+      testInput1.addEventListener('addedToken', function (e) {
+        console.log('addToken()', e);
+      });
+
+      testInput1.addEventListener('input', testInput1_onInput);
+    }
+
+    init();
+  </script>
+</body>
+
+</html> -->
